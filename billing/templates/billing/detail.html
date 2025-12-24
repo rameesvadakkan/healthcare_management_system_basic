@@ -1,0 +1,55 @@
+{% extends "base.html" %}
+{% block title %}Bill Details{% endblock %}
+
+{% block content %}
+<h2>Invoice</h2>
+
+<table border="1" cellpadding="8">
+    <tr>
+        <th>Patient</th>
+        <td>{{ bill.appointment.patient.name }}</td>
+    </tr>
+    <tr>
+        <th>Doctor</th>
+        <td>{{ bill.appointment.doctor.name }}</td>
+    </tr>
+    <tr>
+        <th>Date</th>
+        <td>{{ bill.appointment.date }}</td>
+    </tr>
+    <tr>
+        <th>Consultation Fee</th>
+        <td>₹ {{ bill.consultation_fee }}</td>
+    </tr>
+    <tr>
+        <th>Medicine Fee</th>
+        <td>₹ {{ bill.medicine_fee }}</td>
+    </tr>
+    <tr>
+        <th>Laboratory Fee</th>
+        <td>₹ {{ bill.laboratory_fee }}</td>
+    </tr>
+    <tr>
+        <th><b>Total</b></th>
+        <td><b>₹ {{ bill.total_amount }}</b></td>
+    </tr>
+    <tr>
+        <th>Status</th>
+        <td>{{ bill.status }}</td>
+    </tr>
+</table>
+
+<br>
+
+
+{% if bill.status == "Paid" %}
+    <p><b>Payment Mode:</b> {{ bill.payment_mode }}</p>
+    <a href="{% url 'bill_pdf' bill.id %}">Download Invoice PDF</a>
+{% else %}
+    <a href="{% url 'bill_payment' bill.id %}">Pay Now</a>
+{% endif %}
+
+
+<br><br>
+<a href="{% url 'appointment_list' %}">⬅ Back to Appointments</a>
+{% endblock %}

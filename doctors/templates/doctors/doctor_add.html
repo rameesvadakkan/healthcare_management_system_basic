@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+{% block title %}Add Doctor{% endblock %}
+{% block content %}
+<h2>Add Doctor</h2>
+
+<form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">Save Doctor</button>
+</form>
+
+<a href="{% url 'doctor_list' %}">View Doctors</a>
+{% endblock %}

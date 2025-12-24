@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+
+{% block title %}Billing List{% endblock %}
+{% block content %}
+<h2>Billing List</h2>
+
+<table border="1">
+<tr>
+    <th>Patient</th>
+    <th>Doctor</th>
+    <th>Total</th>
+    <th>Status</th>
+    <th>Action</th>
+    <th>Invoice</th>
+</tr>
+
+{% for b in bills %}
+<tr>
+    <td>{{ b.appointment.patient.name }}</td>
+    <td>{{ b.appointment.doctor.name }}</td>
+    <td>{{ b.total_amount }}</td>
+    <td>{{ b.status }}</td>
+    <td>
+        {% if b.status == "Pending" %}
+            <a href="{% url 'bill_detail' b.id %}">Pay Now</a>
+        {% else %}
+            ✔ Paid
+        {% endif %}
+    </td>
+    <td>
+        {% if b.status == "Paid" %}
+    <a href="{% url 'bill_pdf' b.id %}">Bill</a>
+{% else %}
+    --
+{% endif %}
+</td>
+</tr>
+{% endfor %}
+</table>
+{% endblock %}

@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+{% block title %}Pay Bill{% endblock %}
+
+{% block content %}
+<h2>Pay Bill</h2>
+
+<p><b>Patient:</b> {{ bill.appointment.patient.name }}</p>
+<p><b>Total Amount:</b> ₹ {{ bill.total_amount }}</p>
+
+<form method="post">
+    {% csrf_token %}
+
+    <label>
+        <input type="radio" name="payment_mode" value="UPI" required>
+        UPI
+    </label><br>
+
+    <label>
+        <input type="radio" name="payment_mode" value="Card">
+        Card
+    </label><br>
+
+    <label>
+        <input type="radio" name="payment_mode" value="Cash">
+        Cash
+    </label><br><br>
+
+    <button type="submit">Confirm Payment</button>
+</form>
+
+<br>
+<a href="{% url 'bill_detail' bill.id %}">Cancel</a>
+{% endblock %}

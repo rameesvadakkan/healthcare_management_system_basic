@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %}Hospital Management System{% endblock %}</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: #f4f6f9;
+        }
+        header {
+            background: #1f2937;
+            color: white;
+            padding: 15px 30px;
+        }
+        nav a {
+            color: white;
+            margin-right: 15px;
+            text-decoration: none;
+            font-weight: bold;
+        }
+        nav a:hover {
+            text-decoration: underline;
+        }
+        .nav-right {
+    float: right;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.user-badge {
+    background: #374151;
+    padding: 6px 12px;
+    border-radius: 20px;
+    font-size: 14px;
+}
+
+.logout-btn {
+    background: #dc2626;
+    color: white;
+    border: none;
+    border-radius: 20px;
+    padding: 6px 14px;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+.logout-btn:hover {
+    background: #b91c1c;
+}
+
+        .container {
+            padding: 30px;
+            margin-bottom: 60px;
+        }
+        .dashboard {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 20px;
+}
+
+.card {
+    padding: 20px;
+    border-radius: 8px;
+    color: white;
+    text-align: center;
+    font-size: 18px;
+}
+
+.card h3 {
+    margin: 0;
+    font-size: 16px;
+}
+
+.card p {
+    font-size: 28px;
+    margin-top: 10px;
+    font-weight: bold;
+}
+
+/* Card colors */
+.blue { background: #1f2937; }
+.green { background: #1f2937; }
+.orange { background: #1f2937; }
+.red { background: #1f2937; }
+.purple { background: #1f2937; }
+
+        footer {
+            background: #e5e7eb;
+            padding: 10px;
+            text-align: center;
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+        }
+        button {
+            padding: 6px 12px;
+            cursor: pointer;
+        }
+    </style>
+
+    {% block extra_css %}{% endblock %}
+</head>
+<body>
+
+<header>
+    <h2>Hospital Management System</h2>
+    <nav style="display:flex; align-items:center; justify-content:space-between;">
+
+       <div>
+    <a href="{% url 'home' %}">Home</a>
+    <a href="{% url 'patient_list' %}">Patients</a>
+    <a href="{% url 'doctor_list' %}">Doctors</a>
+    <a href="{% url 'appointment_list' %}">Appointments</a>
+    <a href="{% url 'bill_list' %}">Billing</a>
+</div>
+        {% if user.is_authenticated %}
+<div class="nav-right">
+    <span class="user-badge">{{ user.username }}</span>
+
+    <form method="post" action="{% url 'logout' %}">
+        {% csrf_token %}
+        <button type="submit" class="logout-btn">Logout</button>
+    </form>
+</div>
+{% endif %}
+    </nav>
+</header>
+
+<div class="container">
+    {% block content %}{% endblock %}
+</div>
+
+<footer>
+    Hospital Management System © {% now "Y" %}
+</footer>
+
+{% block extra_js %}{% endblock %}
+</body>
+</html>

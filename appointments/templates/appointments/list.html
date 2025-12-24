@@ -1,0 +1,54 @@
+{% extends "base.html" %}
+{% block title %}Appointment List - Hospital Management System{% endblock %}
+
+{% block content %}
+<h2>Appointment List</h2>
+
+<a href="{% url 'appointment_add' %}">+ New Appointment</a>
+
+<table border="1">
+    <tr>
+        <th>Patient</th>
+        <th>Doctor</th>
+        <th>Date</th>
+        <th>Time</th>
+        <th>Status</th>
+        <th>Actions</th>
+        <th>Payment</th>
+        
+    </tr>
+    {% for a in appointments %}
+    <tr>
+        <td>{{ a.patient.name }}</td>
+        <td>{{ a.doctor.name }}</td>
+        <td>{{ a.date }}</td>
+        <td>{{ a.time }}</td>
+        <td>{{ a.status }}</td>
+         <td>
+         {% if a.status == "Pending" %}
+            <a href="{% url 'appointment_approve' a.id %}">Approve</a> |
+            <a href="{% url 'appointment_cancel' a.id %}">Cancel</a>
+        
+        {% endif %}
+         {% if a.status == "Approved" and a.bill %}
+    <a href="{% url 'bill_detail' a.bill.id %}">View Bill</a>
+{% elif a.status == "Completed" %}
+    ✔ Completed
+{% endif %}
+
+    </td>
+    <td>
+   {% if a.bill and a.status == "Approved" %}
+            <p>UnPaid</p>
+        {% elif a.status == "Completed" %}
+            ✔ Paid
+        {% endif %}
+</td>
+
+    </tr>
+    {% empty %}
+    <tr><td colspan="5">No appointments</td></tr>
+    {% endfor %}
+</table>
+<a href="{% url 'home' %}">Back to Home</a>    
+{% endblock %}
