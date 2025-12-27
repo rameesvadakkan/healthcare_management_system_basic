@@ -4,5 +4,5 @@ from .models import Doctor
 class DoctorForm(forms.ModelForm):
     class Meta:
         model = Doctor
-        fields = ['name','specialization','experience']
+        fields = '__all__'
         

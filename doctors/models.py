@@ -3,7 +3,7 @@ class Doctor(models.Model):
     name = models.CharField(max_length=100)
     specialization = models.CharField(max_length=100)
     experience = models.IntegerField()
-    consultation_fee = models.DecimalField(max_digits=10, decimal_places=2)
+    consultation_fee = models.DecimalField(max_digits=10, decimal_places=2, default=0.00)
 
     def __str__(self):
         return self.name
