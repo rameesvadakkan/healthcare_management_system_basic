@@ -11,6 +11,9 @@
         {{ d.name }} |
         {{ d.specialization }} |
         {{ d.experience }} years
+        | ${{ d.consultation_fee }}
+        | <a href="{% url 'doctor_edit' d.id %}">Edit</a>
+        | <a href="{% url 'doctor_delete' d.id %}">Delete</a>
     </li>
 {% empty %}
     <li>No doctors found</li>
